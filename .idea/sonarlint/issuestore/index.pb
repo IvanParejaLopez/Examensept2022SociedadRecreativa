@@ -7,3 +7,5 @@ Q
 !src/main/java/sociedad/Socio.java,b\2\b204a75a556608b4608fb909c2d3d7031c2af675
 L
 src/main/java/TestSocio.java,3\6\3636c0d62714a584b5ffa9beb370477ab6676b93
+T
+$src/main/java/sociedad/Sociedad.java,5\0\503ad1e1b2521ecb32d114031c6da1ca41c2b28e
