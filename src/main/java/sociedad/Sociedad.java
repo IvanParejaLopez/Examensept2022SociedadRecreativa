@@ -9,30 +9,35 @@ public class Sociedad {
     private Set <Socio> membersNotInActivities;
     private Map<String, Set<Socio>> membersInActivities;
     public Sociedad(){
-        membersNotInActivities = new HashSet<>(); //ns si poner hashmap o tree
-        membersInActivities = new HashMap<>();
+        membersNotInActivities = new TreeSet<>(); //ns si poner hashmap o tree
+        membersInActivities = new TreeMap<>();
     }
     public void leerDeFichero(String fich){
         try {
             File file = new File(fich);
             try (Scanner scanner = new Scanner(file)) {
                 while (scanner.hasNextLine()){
-                    scanner.useDelimiter("[%]");
-                    String nombre = scanner.next();
-                    Set<String> interests = new HashSet<>();
-                    try (Scanner sc = new Scanner(scanner.next())){
-                        sc.useDelimiter(",");
-                        while (sc.hasNext()){
-                            interests.add(sc.next().toLowerCase(Locale.ENGLISH));
+                    try (Scanner mecagoen = new Scanner(scanner.nextLine())){
+                        mecagoen.useDelimiter("%");
+                        String nombre = mecagoen.next();
+                        Set<String> interests = new TreeSet<>();
+                        try (Scanner sc = new Scanner(mecagoen.next())){
+                            sc.useDelimiter(",");
+                            while (sc.hasNext()){
+                                String ma = sc.next().toLowerCase(Locale.ENGLISH);
+                                interests.add(ma);
+                            }
                         }
+                        int num = Integer.parseInt(mecagoen.next());
+                        nuevoSocio(new Socio(nombre, interests, num));
+                    }catch (Exception e){
+                        //no hacer nada
                     }
-                    int num = scanner.nextInt();
-                    nuevoSocio(new Socio(nombre, interests, num));
                 }
             }catch (IOException e){
                 throw new IOException(e.getMessage());
             }catch (Exception e){
-                //Do nothing
+                //no hacer nada
             }
         }catch (IOException e){
             throw new SociedadException("No se ha encontrado el fichero " + fich);
@@ -58,20 +63,22 @@ public class Sociedad {
         }
     }
     public void inscribir (String nombre, int identificador, String actividad){
-        Set<String> actividades = new HashSet<>(); //hay alguna otra forma?
-        actividades.add(actividad);
+        Set<String> actividades = new TreeSet<>(); //hay alguna otra forma?
+        actividades.add(actividad.toLowerCase());
         Socio socio = new Socio(nombre, actividades, identificador);
         if (buscarSocioEnConjunto(socio, membersNotInActivities) != null){
+            //System.out.println("inscribo a " + socio);
             Set<Socio> contenidos =
-                    membersInActivities.getOrDefault(actividad.toLowerCase(), new HashSet<>());
+                    membersInActivities.getOrDefault(actividad.toLowerCase(), new TreeSet<>());
             contenidos.add(socio);
             membersInActivities.put(actividad.toLowerCase(), contenidos); //idk
+            membersNotInActivities.remove(socio);
         }
     }
     public void guardarSocios(String fich){
         File file = new File(fich);
         try {
-            guardarSocios(new PrintWriter(file));
+            guardarSocios(new PrintWriter(file));// mal, debería haberlo puesto autocloseable o closearlo yo con pw.flush
         }catch (IOException e){
             throw new SociedadException("No se ha localizado el fichero");
         }
@@ -81,5 +88,6 @@ public class Sociedad {
         for (Socio socio : sociosNoIns){
             pw.println(socio); //ns si poner "\n"
         }
+        pw.flush();
     }
 }

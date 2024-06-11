@@ -13,6 +13,11 @@ public class Socio implements Comparable<Socio>{
         }else {
             name = nom;
             interests = in;
+            /*
+            for (String interest : i) {
+			interests.add(interest.toLowerCase());
+		     }
+             */
             ident = i;
         }
     }

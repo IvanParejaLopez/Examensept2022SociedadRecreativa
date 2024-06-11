@@ -1,0 +1,10 @@
+Junko Tabei%Escalada,KAYAK,buceo%327
+Layton Kor%senderismo,ESCalada%24
+Layton Kor%SENDERISMO,escalada;24
+Layton Kor%%24
+Tony Hawk%monopatin,patinaje,bmx%123
+Tony Hawk%monopatin,patinaje,bmx%127
+Leticia Bufoni%monopatin,PATINAJE,bmx%227
+Jack Bones%buceo,fotOGRafia,rafting%145
+
+
