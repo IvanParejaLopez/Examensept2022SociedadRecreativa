@@ -31,7 +31,7 @@ public class Socio implements Comparable<Socio>{
 
     @Override
     public String toString() {
-        return "[" + name + ", [" + interests + "], " + ident;
+        return "[" + name + ", " + interests.toString().toLowerCase() + ", " + ident + "]";
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Socio implements Comparable<Socio>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Socio socio = (Socio) o;
-        return ident == socio.ident && Objects.equals(name, socio.name);
+        return ident == socio.ident && this.hashCode() == ((Socio) o).hashCode();
     }
 
     @Override
