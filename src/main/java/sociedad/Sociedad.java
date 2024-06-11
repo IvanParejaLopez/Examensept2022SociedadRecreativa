@@ -68,10 +68,18 @@ public class Sociedad {
             membersInActivities.put(actividad.toLowerCase(), contenidos); //idk
         }
     }
-    public void guardarSocios(String){
-
+    public void guardarSocios(String fich){
+        File file = new File(fich);
+        try {
+            guardarSocios(new PrintWriter(file));
+        }catch (IOException e){
+            throw new SociedadException("No se ha localizado el fichero");
+        }
     }
-    public void guardarSocios(PrintWriter){
-
+    public void guardarSocios(PrintWriter pw){
+        List<Socio> sociosNoIns = new ArrayList<>(membersNotInActivities);
+        for (Socio socio : sociosNoIns){
+            pw.println(socio); //ns si poner "\n"
+        }
     }
 }
